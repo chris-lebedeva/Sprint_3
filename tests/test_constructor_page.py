@@ -13,7 +13,6 @@ def test_constructor_sauces_section_switching(driver):
     driver.get(Urls.MAIN_PAGE_URL)
     driver.find_element(*Locators.CONSTRUCTOR_SAUCES_SECTION_SWITCHER).click()
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.CONSTRUCTOR_SAUCES_SECTION_HEADING))
-    time.sleep(1)
 
     assert driver.find_element(*Locators.CONSTRUCTOR_SAUCES_SECTION_HEADING).text == 'Соусы'
 
@@ -23,7 +22,6 @@ def test_constructor_toppings_section_switching(driver):
     driver.get(Urls.MAIN_PAGE_URL)
     driver.find_element(*Locators.CONSTRUCTOR_TOPPINGS_SECTION_SWITCHER).click()
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.CONSTRUCTOR_TOPPINGS_SECTION_HEADING))
-    time.sleep(1)
 
     assert driver.find_element(*Locators.CONSTRUCTOR_TOPPINGS_SECTION_HEADING).text == 'Начинки'
 
@@ -32,10 +30,8 @@ def test_constructor_toppings_section_switching(driver):
 def test_constructor_buns_section_switching(driver):
     driver.get(Urls.MAIN_PAGE_URL)
     driver.find_element(*Locators.CONSTRUCTOR_TOPPINGS_SECTION_SWITCHER).click()
-    time.sleep(1)
     driver.find_element(*Locators.CONSTRUCTOR_BUNS_SECTION_SWITCHER).click()
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.CONSTRUCTOR_BUNS_SECTION_HEADING))
-    time.sleep(1)
 
     assert driver.find_element(*Locators.CONSTRUCTOR_BUNS_SECTION_HEADING).text == 'Булки'
 
@@ -47,18 +43,18 @@ def test_order_burger_success(driver):
     driver.find_element(*Locators.PASSWORD_INPUT).send_keys(Data.EXISTING_USER_PASSWORD)
     driver.find_element(*Locators.LOGIN_BUTTON).click()
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.CONSTRUCTOR_BUNS_SECTION_HEADING))
-    bun = WebDriverWait(driver, 20).until(EC.element_to_be_clickable(Locators.BUN))
+    bun = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.BUN))
     drag_and_drop_to_basket(driver, bun)
     driver.find_element(*Locators.CONSTRUCTOR_TOPPINGS_SECTION_SWITCHER).click()
-    time.sleep(1)
-    patty = WebDriverWait(driver, 20).until(EC.element_to_be_clickable(Locators.PATTY))
+    time.sleep(0.40)
+    patty = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.PATTY))
     drag_and_drop_to_basket(driver, patty)
     driver.find_element(*Locators.CONSTRUCTOR_SAUCES_SECTION_SWITCHER).click()
-    time.sleep(1)
-    sauce = WebDriverWait(driver, 20).until(EC.element_to_be_clickable(Locators.SAUCE))
+    time.sleep(0.40)
+    sauce = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.SAUCE))
     drag_and_drop_to_basket(driver, sauce)
     driver.find_element(*Locators.ORDER_BUTTON).click()
-    time.sleep(1)
+    time.sleep(0.01)
 
     assert driver.find_element(*Locators.CONFIRMATION_POPUP).is_displayed()
 
@@ -67,6 +63,4 @@ def drag_and_drop_to_basket(driver, element):
     action = ActionChains(driver)
     action.drag_and_drop_by_offset(element, 15, 15).perform()
     pyautogui.moveTo(None, 400)
-    time.sleep(1)
     pyautogui.click()
-    time.sleep(1)

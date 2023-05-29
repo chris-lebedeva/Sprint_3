@@ -3,7 +3,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from locators import Locators
 from urls import Urls
 from data import Data
-import time
 
 
 # Проверка перехода в личный кабинет
@@ -37,7 +36,6 @@ def test_personal_account_logout(driver):
     driver.find_element(*Locators.EMAIL_INPUT).send_keys(Data.EXISTING_USER_EMAIL)
     driver.find_element(*Locators.PASSWORD_INPUT).send_keys(Data.EXISTING_USER_PASSWORD)
     driver.find_element(*Locators.LOGIN_BUTTON).click()
-    time.sleep(1)
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.PERSONAL_ACCOUNT))
     driver.find_element(*Locators.PERSONAL_ACCOUNT).click()
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.LOGOUT_BUTTON))
